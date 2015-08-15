@@ -1,0 +1,40 @@
+{
+    "name": "nikapps/nikpay",
+    "description": "A php package for connecting to Saman 724 USSD gateway",
+    "keywords": [
+        "nikpay",
+        "saman",
+        "724",
+        "pardakht",
+        "ussd",
+        "payment",
+        "gateway",
+        "bank",
+        "iran"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ali Borhani",
+            "email": "aliborhani1@gmail.com"
+        },
+        {
+            "name": "Hossein Moradgholi",
+            "email": "hossein@moradgholi.com"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-soap": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nikapps\\SamanUssd\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.2"
+    }
+}

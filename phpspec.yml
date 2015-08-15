@@ -1,0 +1,3 @@
+suits:
+  nikpay_suit:
+    namespace: Nikapps\SamanUssd

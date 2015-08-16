@@ -2,3 +2,5 @@
 composer.lock
 /.idea/
 /testing/
+
+tests/_output/*

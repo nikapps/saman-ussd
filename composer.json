@@ -1,5 +1,5 @@
 {
-    "name": "nikapps/nikpay",
+    "name": "nikapps/saman-ussd",
     "description": "A php package for connecting to Saman 724 USSD gateway",
     "keywords": [
         "nikpay",
@@ -27,7 +27,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "ext-soap": "*"
+        "ext-soap": "*",
+        "piotrooo/wsdl-creator": "1.*"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +36,7 @@
         }
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.2"
+        "phpspec/phpspec": "^2.2",
+        "codeception/codeception": "2.0.*"
     }
 }

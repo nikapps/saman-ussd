@@ -75,11 +75,12 @@ class ProductInfoResponse implements SamanUssdResponse
         ];
 
         if (!is_null($this->terminal)) {
-            $data[] = $this->terminal;
-        }
 
-        if (!is_null($this->wage)) {
-            $data[] = $this->wage;
+            $response[] = $this->terminal;
+
+            if (!is_null($this->wage)) {
+                $response[] = $this->wage;
+            }
         }
 
         return implode(';', $response);

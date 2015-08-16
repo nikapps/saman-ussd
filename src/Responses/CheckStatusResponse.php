@@ -18,7 +18,7 @@ class CheckStatusResponse implements SamanUssdResponse
      *
      * @var boolean
      */
-    protected $successful;
+    protected $successful = false;
 
 
     /**

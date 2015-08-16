@@ -23,7 +23,7 @@ class CallSaleResponse implements SamanUssdResponse
     /**
      * Provider id , when transaction is successful
      *
-     * @var string|integer
+     * @var string
      */
     protected $providerId;
 
@@ -120,7 +120,7 @@ class CallSaleResponse implements SamanUssdResponse
     /**
      * Set provider id
      *
-     * @param integer $providerId
+     * @param string $providerId
      * @return $this
      */
     public function providerId($providerId)
@@ -134,7 +134,7 @@ class CallSaleResponse implements SamanUssdResponse
      * Alias of providerId
      *
      * @see $this::providerId()
-     * @param integer $providerId
+     * @param string $providerId
      * @return $this
      */
     public function id($providerId)

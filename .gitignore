@@ -4,3 +4,4 @@ composer.lock
 /testing/
 
 tests/_output/*
+tests/_output/*

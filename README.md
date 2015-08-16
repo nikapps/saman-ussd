@@ -289,11 +289,11 @@ return (new CheckStatusResponse)
 }
 ~~~
 
-#### Alias method:
+#### Alias methods:
 
 * `failedTransaction()` alias of `failed()`
 * `successfulTransaction()` alias of `successful()`
-* `failedResult()` alias of `notFosund()`
+* `failedResult()` alias of `notFound()`
 * `successfulResult()` alias of `found()`
 
 ---

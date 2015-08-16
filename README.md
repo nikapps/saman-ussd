@@ -36,7 +36,7 @@ use Nikapps\SamanUssd\SamanUssd;
 
 $samanUssd = new SamanUssd();
 
-// Set api endpoint (address of running this file)
+// Set api endpoint
 $samanUssd->endpoint('http://example.com/webservice.php');
 
 // TODO: Set listener or callbacks

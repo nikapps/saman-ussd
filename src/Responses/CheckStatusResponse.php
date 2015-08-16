@@ -5,7 +5,6 @@ use Nikapps\SamanUssd\Contracts\SamanUssdResponse;
 
 class CheckStatusResponse implements SamanUssdResponse
 {
-
     /**
      * Is transaction found
      *
@@ -126,5 +125,4 @@ class CheckStatusResponse implements SamanUssdResponse
     {
         return $this->failed();
     }
-
 }

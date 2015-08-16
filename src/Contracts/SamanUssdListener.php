@@ -8,7 +8,6 @@ use Nikapps\SamanUssd\Responses\ProductInfoResponse;
 
 interface SamanUssdListener
 {
-
     /**
      * When `GetProductInfo` is called on soap server
      *
@@ -45,4 +44,4 @@ interface SamanUssdListener
      * @return SamanUssdResponse|CheckStatusResponse
      */
     public function onCheckStatus($providerId);
-} 
+}

@@ -3,14 +3,13 @@ namespace Nikapps\SamanUssd\Contracts;
 
 interface SamanSoapApi
 {
-
     /**
      * Constructor
      *
      * @param SamanUssdListener $listener
      * @param array|\Closure[] $callbacks
      */
-    function __construct(SamanUssdListener $listener = null, array $callbacks = []);
+    public function __construct(SamanUssdListener $listener = null, array $callbacks = []);
 
     /**
      * Get product info
@@ -54,4 +53,4 @@ interface SamanSoapApi
      * @return string
      */
     public function CheckStatus($ProviderID);
-} 
+}

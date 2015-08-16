@@ -6,7 +6,6 @@ use Nikapps\SamanUssd\Contracts\SamanUssdListener;
 
 class SamanSoapServer implements SamanSoapApi
 {
-
     /**
      * @var SamanUssdListener
      */
@@ -20,7 +19,7 @@ class SamanSoapServer implements SamanSoapApi
      * @param SamanUssdListener $listener
      * @param array $callbacks
      */
-    function __construct(SamanUssdListener $listener = null, array $callbacks = [])
+    public function __construct(SamanUssdListener $listener = null, array $callbacks = [])
     {
         $this->listener = $listener;
         $this->callbacks = $callbacks;
@@ -55,14 +54,12 @@ class SamanSoapServer implements SamanSoapApi
         $codes = explode('*', $productCode);
 
         if (isset($this->callbacks['product_info'])) {
-
             return $this->callbacks['product_info']($codes, $languageCode)
                 ->make();
         }
 
         return $this->listener->onProductInfo($codes, $languageCode)
             ->make();
-
     }
 
     /**
@@ -101,7 +98,6 @@ class SamanSoapServer implements SamanSoapApi
             $SEPId,
             $languageCode
         )->make();
-
     }
 
     /**
@@ -113,7 +109,6 @@ class SamanSoapServer implements SamanSoapApi
      */
     public function ExecSaleProvider($ProviderID)
     {
-
         if (isset($this->callbacks['execute_sale'])) {
             return $this->callbacks['execute_sale']($ProviderID)->make();
         }
@@ -131,7 +126,6 @@ class SamanSoapServer implements SamanSoapApi
     public function CheckStatus($ProviderID)
     {
         if (isset($this->callbacks['check_status'])) {
-
             return $this->callbacks['check_status']($ProviderID)->make();
         }
 

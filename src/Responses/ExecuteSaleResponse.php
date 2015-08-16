@@ -5,7 +5,6 @@ use Nikapps\SamanUssd\Contracts\SamanUssdResponse;
 
 class ExecuteSaleResponse implements SamanUssdResponse
 {
-
     /**
      * Is successful?
      *
@@ -127,5 +126,4 @@ class ExecuteSaleResponse implements SamanUssdResponse
 
         return $this;
     }
-
 }

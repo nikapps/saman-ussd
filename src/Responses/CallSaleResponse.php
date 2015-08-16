@@ -5,7 +5,6 @@ use Nikapps\SamanUssd\Contracts\SamanUssdResponse;
 
 class CallSaleResponse implements SamanUssdResponse
 {
-
     /**
      * Is successful?
      *
@@ -141,5 +140,4 @@ class CallSaleResponse implements SamanUssdResponse
     {
         return $this->providerId($providerId);
     }
-
 }

@@ -5,7 +5,6 @@ use Nikapps\SamanUssd\Contracts\SamanUssdResponse;
 
 class ProductInfoResponse implements SamanUssdResponse
 {
-
     /**
      * Is successful?
      *
@@ -75,7 +74,6 @@ class ProductInfoResponse implements SamanUssdResponse
         ];
 
         if (!is_null($this->terminal)) {
-
             $response[] = $this->terminal;
 
             if (!is_null($this->wage)) {
@@ -222,6 +220,4 @@ class ProductInfoResponse implements SamanUssdResponse
 
         return $this;
     }
-
-
 }

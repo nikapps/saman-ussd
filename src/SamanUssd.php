@@ -9,7 +9,6 @@ use WSDL\WSDLCreator;
 
 class SamanUssd
 {
-
     /**
      * @var string
      */
@@ -55,14 +54,12 @@ class SamanUssd
      */
     public function handle()
     {
-
         $wsdl = new WSDLCreator($this->soapApiClass, $this->endpoint);
         $wsdl->setNamespace($this->namespace);
 
         isset($_GET[$this->wsdlQueryString])
             ? $wsdl->renderWSDL()
             : $this->setupSoapServer($wsdl);
-
     }
 
     /**
@@ -216,5 +213,4 @@ class SamanUssd
         $server->setClass($this->soapApiClass, $this->listener, $this->callbacks);
         $server->handle($request);
     }
-
-} 
+}

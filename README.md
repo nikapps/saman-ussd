@@ -133,7 +133,7 @@ $samanUssd->onCheckStatus(function ($providerId) {
 ~~~
 
 ## Responses
-For each api calls, you shoud return it's response object:
+For each api calls, you should return it's response object:
 
 
 ### onProductInfo

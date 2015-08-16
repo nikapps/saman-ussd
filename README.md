@@ -339,6 +339,10 @@ Dev dependencies:
 - `phpspec/phpspec`
 - `codeception/codeception`
 
+## Official documentation
+
+Download: [Technical Documentaion Version 1.8](https://dl.dropboxusercontent.com/u/29141199/saman/saman_ussd_724_documentation_v1.8.pdf)
+
 ## Contribute
 
 Wanna contribute? simply fork this project and make a pull request!

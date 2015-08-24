@@ -36,7 +36,7 @@ use Nikapps\SamanUssd\SamanUssd;
 
 $samanUssd = new SamanUssd();
 
-// Set api endpoint (address of running this file)
+// Set api endpoint
 $samanUssd->endpoint('http://example.com/webservice.php');
 
 // TODO: Set listener or callbacks
@@ -289,11 +289,11 @@ return (new CheckStatusResponse)
 }
 ~~~
 
-#### Alias method:
+#### Alias methods:
 
 * `failedTransaction()` alias of `failed()`
 * `successfulTransaction()` alias of `successful()`
-* `failedResult()` alias of `notFosund()`
+* `failedResult()` alias of `notFound()`
 * `successfulResult()` alias of `found()`
 
 ---

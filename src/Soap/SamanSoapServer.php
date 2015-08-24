@@ -69,7 +69,7 @@ class SamanSoapServer implements SamanSoapApi
      * @param string $productCode
      * @param int $Amount
      * @param string $CellNumber
-     * @param int $SEPId
+     * @param long $SEPId
      * @param string $languageCode
      * @return string $Result
      */

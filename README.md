@@ -76,7 +76,7 @@ class Listener implements SamanUssdListener{
      * @param string[] $codes
      * @param integer $amount
      * @param string $phone Mobile/Call number
-     * @param integer $sepId Unique number provided by saman724
+     * @param long $sepId Unique number provided by saman724
      * @param string $language
      * 
      * @return \Nikapps\SamanUssd\Responses\CallSaleResponse

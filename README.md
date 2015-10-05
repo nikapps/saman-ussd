@@ -1,5 +1,7 @@
-Saman USSD
+[obsolete] Saman USSD 
 ===================
+**Obsolete package - payment with USSD is forbidden by Iranian central bank ([more info](http://khabaronline.ir/%28X%281%29S%28dja55emvz22zzic1fn5qleqc%29%29/detail/464534/Economy/macroeconomics))**
+
 <img title="Saman *724*" alt="Saman *724*" src="http://www.724sep.ir/Content/image/mobile.png" height="200">
 
 A php package for connecting to [Saman *724#](http://www.724sep.ir/) payment gateway.

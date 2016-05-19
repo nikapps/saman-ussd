@@ -121,7 +121,7 @@ $samanUssd->setListener(new Listener());
 ~~~
 
 #### 2. Callbacks:
-Also you can pass a closure for each soap calls:
+Also you can pass a closure for each soap call:
 
 ~~~php
 $samanUssd->onProductInfo(function (array $codes, $language) {
@@ -150,7 +150,7 @@ $samanUssd->onCheckStatus(function ($providerId) {
 ~~~
 
 ## Responses
-For each api calls, you should return it's response object:
+For each api call, you should return it's response object:
 
 
 ### onProductInfo

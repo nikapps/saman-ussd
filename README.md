@@ -150,11 +150,11 @@ $samanUssd->onCheckStatus(function ($providerId) {
 ~~~
 
 ## Responses
-For each api call, you should return it's response object:
+For each api call, you should return its response object:
 
 
 ### onProductInfo
-When method `GetProductInfo` is called on your soap server, `onProductInfo` will be called on your listener and you should return  an instance of `Nikapps\SamanUssd\Responses\ProductInfoResponse`:
+When method `GetProductInfo` is called on your soap server, `onProductInfo` will be called on your listener and you should return an instance of `Nikapps\SamanUssd\Responses\ProductInfoResponse`:
 
 ~~~php
 public function onProductInfo(array $codes, $language)
@@ -169,7 +169,7 @@ public function onProductInfo(array $codes, $language)
 }
 ~~~
 
-If given codes are incorrect:
+If the given codes are incorrect:
 
 ~~~php
 return (new ProductInfoResponse())
@@ -274,7 +274,7 @@ public function onCheckStatus($providerId)
 }
 ~~~
 
-When `provider_id` is is not found:
+When `provider_id` is not found:
 
 ~~~php
 return (new CheckStatusResponse)
@@ -320,7 +320,7 @@ $samanUssd->setOptions([
 ~~~
 
 #### 3. Set custom WSDL query string
-By default, if you append `?wsdl` to your endpoint uri you can see wsdl specification. If you want to set custom query string for that:
+By default, if you append `?wsdl` to your endpoint uri, you can see wsdl specification. If you want to set custom query string for that:
 
 ~~~php
 $samanUssd->setWsdlQueryString('WSDL');

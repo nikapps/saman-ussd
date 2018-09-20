@@ -2,6 +2,7 @@
 ===================
 **Obsolete package - payment with USSD is forbidden by Iranian central bank ([more info](http://khabaronline.ir/%28X%281%29S%28dja55emvz22zzic1fn5qleqc%29%29/detail/464534/Economy/macroeconomics))**
 
+[![Travis (.org) branch](https://img.shields.io/travis/:user/:repo/:branch.svg?style=flat-square)](https://github.com/nikapps/saman-ussd/) [![Latest Stable Version](https://poser.pugx.org/nikapps/saman-ussd/v/stable)](https://packagist.org/packages/nikapps/saman-ussd) [![License](https://poser.pugx.org/nikapps/saman-ussd/license)](https://packagist.org/packages/nikapps/saman-ussd)
 <img title="Saman *724*" alt="Saman *724*" src="http://www.724sep.ir/Content/image/mobile.png" height="200">
 
 A php package for connecting to [Saman *724#](http://www.724sep.ir/) payment gateway.
@@ -348,6 +349,7 @@ vendor/bin/codecept run
 
 ## Dependencies
 
+- `php >= 7.1`
 - `piotrooo/wsdl-creator`
 
 Dev dependencies:

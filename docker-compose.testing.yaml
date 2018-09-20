@@ -1,0 +1,18 @@
+version: '3'
+services:
+  phpfpm:
+    tty: true
+    image: 'bitnami/php-fpm:7.2'
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/app
+
+  web:
+    image: 'nginx:alpine'
+    depends_on:
+      - phpfpm
+    ports:
+      - '8000:80'
+    volumes:
+      - ./.docker/nginx/:/etc/nginx/conf.d/

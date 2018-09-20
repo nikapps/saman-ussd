@@ -1,8 +1,7 @@
 class_name: ApiTester
 modules:
-    enabled: [PhpBrowser, REST, ApiHelper]
-    config:
-        PhpBrowser:
-            url: http://saman-ussd.dev
-        REST:
-            url: http://saman-ussd.dev/tests/api
+    enabled:
+      - REST:
+          depends: PhpBrowser
+          url: http://127.0.0.1:8000/tests/api/
+      - ApiHelper:

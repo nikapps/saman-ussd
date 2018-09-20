@@ -340,8 +340,8 @@ vendor/bin/phpspec run
 
 Run:
 
-~~~
-docker-compose -d -f docker-compose.testing.yaml up
+~~~bash
+docker-compose -f docker-compose.testing.yaml up -d
 
 vendor/bin/codecept run
 ~~~

@@ -3,7 +3,7 @@
 $I = new ApiTester($scenario);
 
 $I->am('Saman IT employee!');
-$I->wantTo('test CallSaleProvider method on this webservice');
+$I->wantTo('test ExecSaleProvider method on this webservice');
 
 $I->haveHttpHeader('Content-Type', 'text/xml');
 $I->sendPOST(

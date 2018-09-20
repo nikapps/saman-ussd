@@ -5,24 +5,51 @@ use Nikapps\SamanUssd\Contracts\SamanSoapApi;
 use Nikapps\SamanUssd\Contracts\SamanUssdListener;
 use Nikapps\SamanUssd\Soap\SamanSoapServer;
 use SoapServer;
-use WSDL\WSDLCreator;
+use WSDL\Annotation\BindingType;
+use WSDL\Annotation\SoapBinding;
+use WSDL\Builder\AnnotationWSDLBuilder;
+use WSDL\Builder\Method;
+use WSDL\Builder\Parameter;
+use WSDL\Builder\WSDLBuilder;
+use WSDL\Lexer\Tokenizer;
+use WSDL\WSDL;
 
 class SamanUssd
 {
+    /**
+     * If disabled, annotations in soapApiClass are ignored.
+     * @var bool
+     */
+    public $useAnnotions = false;
+
     /**
      * @var string
      */
     protected $soapApiClass = '\Nikapps\SamanUssd\Soap\SamanSoapServer';
 
     /**
+     * Ignored if useAnnotions = true
      * @var string
      */
     protected $endpoint = 'http://example.com/webservice';
 
     /**
+     * Ignored if useAnnotions = true
      * @var string
      */
     protected $namespace = 'http://example.com';
+
+    /**
+     * Ignored if useAnnotions = true
+     * @var string
+     */
+    protected $targetNamespace = 'http://example.com/types';
+
+    /**
+     * Ignored if useAnnotions = true
+     * @var string
+     */
+    protected $name = 'saman-ussd';
 
     /**
      * @var string
@@ -54,16 +81,92 @@ class SamanUssd
      */
     public function handle()
     {
-        $wsdl = new WSDLCreator($this->soapApiClass, $this->endpoint);
-        $wsdl->setNamespace($this->namespace);
 
-        isset($_GET[$this->wsdlQueryString])
-            ? $wsdl->renderWSDL()
-            : $this->setupSoapServer($wsdl);
+        if ($this->useAnnotions) {
+            $builder =(new AnnotationWSDLBuilder($this->soapApiClass))->build()->getBuilder();
+        } else {
+            $builder = WSDLBuilder::instance()
+                ->setName($this->name)
+                ->setTargetNamespace($this->targetNamespace)
+                ->setNs($this->namespace)
+                ->setLocation($this->endpoint)
+                ->setStyle(SoapBinding::RPC)
+                ->setUse(SoapBinding::LITERAL)
+                ->setSoapVersion(BindingType::SOAP_11)
+                ->setMethods($this->getMethods());
+        }
+
+        $wsdl = WSDL::fromBuilder($builder);
+
+        if (isset($_GET[$this->wsdlQueryString]))
+        {
+            echo $wsdl->create();
+        }  else
+        {
+            $this->setupSoapServer(
+                $builder->getNs() . strtolower(ltrim(str_replace('\\', '/', $this->soapApiClass), '/')),
+                $builder->getLocation()
+            );
+        }
     }
 
     /**
-     * Set soap api class
+     * Method definion (if not using annotations)
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function getMethods() {
+        $tokenizer = new Tokenizer();
+
+        $meths=[];
+        /**
+         * public function GetProductInfo
+         */
+        $parameters1 = [
+            Parameter::fromTokens($tokenizer->lex('string $productCode')),
+            Parameter::fromTokens($tokenizer->lex('string $languageCode'))
+        ];
+        $return1 = Parameter::fromTokens($tokenizer->lex('string $Result'));
+        $meths[] = new Method('GetProductInfo', $parameters1, $return1);
+        /**
+         * public function CallSaleProvider
+         *
+         */
+
+        $parameters2 = [
+            Parameter::fromTokens($tokenizer->lex('string $productCode')),
+            Parameter::fromTokens($tokenizer->lex('int $Amount')),
+            Parameter::fromTokens($tokenizer->lex('string $CellNumber')),
+            Parameter::fromTokens($tokenizer->lex('long $SEPId')),
+            Parameter::fromTokens($tokenizer->lex('string $languageCode'))
+        ];
+        $return2 = Parameter::fromTokens($tokenizer->lex('string $Result'));
+        $meths[] = new Method('CallSaleProvider', $parameters2, $return2);
+        /*
+         * public function ExecSaleProvider
+         */
+
+        $parameters3 = [Parameter::fromTokens($tokenizer->lex('string $ProviderID'))];
+        $return3 = Parameter::fromTokens($tokenizer->lex('string $Result'));
+        $meths[] = new Method('ExecSaleProvider', $parameters3, $return3);
+
+        /**
+         * public function CheckStatus
+         */
+         $parameters4 = [Parameter::fromTokens($tokenizer->lex('string $ProviderID'))];
+         $return4 = Parameter::fromTokens($tokenizer->lex('string $Result'));
+         $meths[] = new Method('CheckStatus', $parameters4, $return4);
+
+        return $meths;
+    }
+    /**
+     * Set soap api class.
+     *
+     * IF $this->useAnnotations = true, THEN annotations in $soapApiClass WILL override
+     * $this->name, $this->targetNamespace, $this->namespace and $this->endpoint.
+     *
+     * To ignore annotation in $soapApiClass, set $this->useAnnotations = false.
      *
      * @param string $soapApiClass
      * @return $this
@@ -76,7 +179,7 @@ class SamanUssd
     }
 
     /**
-     * Set api endpoint
+     * Set api endpoint (if not using annotations)
      *
      * @param string $endpoint
      * @return $this
@@ -89,7 +192,7 @@ class SamanUssd
     }
 
     /**
-     * Set namespace
+     * Set namespace (if not using annotations)
      *
      * @param string $namespace
      * @return $this
@@ -100,6 +203,20 @@ class SamanUssd
 
         return $this;
     }
+
+    /**
+     * Set target-namespace (if not using annotations)
+     *
+     * @param string $namespace
+     * @return $this
+     */
+    public function setTargetNamespace($namespace)
+    {
+        $this->targetNamespace = $namespace;
+
+        return $this;
+    }
+
 
     /**
      * Set wsdl query string
@@ -191,20 +308,19 @@ class SamanUssd
     }
 
     /**
-     * Setup soap server
-     *
-     * @param WSDLCreator $wsdl
+     * @param string $uri
+     * @param string $location
      */
-    protected function setupSoapServer(WSDLCreator $wsdl)
+    protected function setupSoapServer(string $uri, string $location)
     {
         $request = file_get_contents('php://input');
 
         $server = new SoapServer(
-            $this->endpoint . '?' . $this->wsdlQueryString,
+            $location . '?' . $this->wsdlQueryString,
             array_merge([
-                'uri'        => $wsdl->getNamespaceWithSanitizedClass(),
+                'uri'        => $uri,
                 'cache_wsdl' => WSDL_CACHE_NONE,
-                'location'   => $wsdl->getLocation(),
+                'location'   => $location,
                 'style'      => SOAP_RPC,
                 'use'        => SOAP_LITERAL
             ], $this->options)

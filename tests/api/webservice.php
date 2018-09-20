@@ -36,7 +36,7 @@ $samanUssd->onCheckStatus(function ($providerId) {
         ->successful();
 });
 
-$endpoint = 'http://saman-ussd.dev/tests/api/webservice.php';
+$endpoint = 'http://web/tests/api/webservice.php';
 
 $samanUssd->endpoint($endpoint);
 $samanUssd->handle();

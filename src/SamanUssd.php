@@ -1,11 +1,12 @@
 <?php
+
 namespace Nikapps\SamanUssd;
 
-use Nikapps\SamanUssd\Contracts\SamanSoapApi;
 use Nikapps\SamanUssd\Contracts\SamanUssdListener;
-use Nikapps\SamanUssd\Soap\SamanSoapServer;
 use SoapServer;
-use WSDL\WSDLCreator;
+use WSDL\Builder\AnnotationWSDLBuilder;
+use WSDL\Builder\WSDLBuilder;
+use WSDL\WSDL;
 
 class SamanUssd
 {
@@ -48,18 +49,21 @@ class SamanUssd
      */
     protected $listener;
 
+    /**
+     * @var string
+     */
+    protected $name = 'ussd-webservice';
+
 
     /**
      * Handle soap server
+     * @throws \Exception
      */
     public function handle()
     {
-        $wsdl = new WSDLCreator($this->soapApiClass, $this->endpoint);
-        $wsdl->setNamespace($this->namespace);
-
         isset($_GET[$this->wsdlQueryString])
-            ? $wsdl->renderWSDL()
-            : $this->setupSoapServer($wsdl);
+            ? $this->renderWsdl()
+            : $this->setupSoapServer();
     }
 
     /**
@@ -110,6 +114,19 @@ class SamanUssd
     public function setWsdlQueryString($wsdlQueryString)
     {
         $this->wsdlQueryString = $wsdlQueryString;
+
+        return $this;
+    }
+
+    /**
+     * Set webservice name
+     *
+     * @param string $name
+     * @return SamanUssd
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }
@@ -192,25 +209,63 @@ class SamanUssd
 
     /**
      * Setup soap server
-     *
-     * @param WSDLCreator $wsdl
+     * @throws \WSDL\Builder\AnnotationBuilderException
      */
-    protected function setupSoapServer(WSDLCreator $wsdl)
+    protected function setupSoapServer()
     {
         $request = file_get_contents('php://input');
+
+        $builder = $this->generateWsdlBuilder();
 
         $server = new SoapServer(
             $this->endpoint . '?' . $this->wsdlQueryString,
             array_merge([
-                'uri'        => $wsdl->getNamespaceWithSanitizedClass(),
+                'uri' => $builder->getTargetNamespace(),
                 'cache_wsdl' => WSDL_CACHE_NONE,
-                'location'   => $wsdl->getLocation(),
-                'style'      => SOAP_RPC,
-                'use'        => SOAP_LITERAL
+                'location' => $builder->getLocation(),
+                'style' => $builder->getStyle(),
+                'use' => $builder->getUse(),
+                'soap_version' => $builder->getSoapVersion(),
             ], $this->options)
         );
 
         $server->setClass($this->soapApiClass, $this->listener, $this->callbacks);
         $server->handle($request);
+    }
+
+    /**
+     * Generate wsdl
+     *
+     * @return string wsdl in xml format
+     * @throws \WSDL\Builder\AnnotationBuilderException
+     */
+    public function wsdl()
+    {
+        return WSDL::fromBuilder($this->generateWsdlBuilder())->create();
+    }
+
+    /**
+     * Render WSDL
+     * @throws \WSDL\Builder\AnnotationBuilderException
+     */
+    protected function renderWsdl()
+    {
+        echo $this->wsdl();
+    }
+
+    /**
+     * Generate wsdl builder
+     *
+     * @return WSDLBuilder
+     * @throws \WSDL\Builder\AnnotationBuilderException
+     */
+    protected function generateWsdlBuilder() {
+        return (new AnnotationWSDLBuilder($this->soapApiClass))
+            ->build()
+            ->getBuilder()
+            ->setLocation($this->endpoint)
+            ->setTargetNamespace($this->namespace)
+            ->setNs($this->namespace . '/types')
+            ->setName($this->name);
     }
 }

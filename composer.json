@@ -26,9 +26,9 @@
     "type": "library",
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.1",
         "ext-soap": "*",
-        "piotrooo/wsdl-creator": "1.*"
+        "piotrooo/wsdl-creator": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,7 @@
         }
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.2",
-        "codeception/codeception": "2.0.*"
+        "phpspec/phpspec": "^4.0",
+        "codeception/codeception": "^2.4"
     }
 }

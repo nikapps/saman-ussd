@@ -4,6 +4,15 @@ namespace Nikapps\SamanUssd\Soap;
 use Nikapps\SamanUssd\Contracts\SamanSoapApi;
 use Nikapps\SamanUssd\Contracts\SamanUssdListener;
 
+/**
+ * @WSDL\Annotation\WebService(
+ *     name="ussd-webservice",
+ *     targetNamespace="http://my-web-site.com",
+ *     ns="http://my-web-site.com/types",
+ *     location="http://127.0.0.1:8000/testing/test.php"
+ * )
+ * @WSDL\Annotation\BindingType SOAP_12
+ */
 class SamanSoapServer implements SamanSoapApi
 {
     /**
@@ -44,9 +53,21 @@ class SamanSoapServer implements SamanSoapApi
     /**
      * Get product info
      *
-     * @WebMethod
+     * @WSDL\Annotation\WebMethod
+     *
+     * @WSDL\Annotation\WebParam(
+     *     param="string $productCode"
+     * )
      * @param string $productCode
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $languageCode"
+     * )
      * @param string $languageCode
+     *
+     * @WSDL\Annotation\WebResult(
+     *     param="string $Result"
+     * )
      * @return string $Result
      */
     public function GetProductInfo($productCode, $languageCode)
@@ -65,12 +86,36 @@ class SamanSoapServer implements SamanSoapApi
     /**
      * Notify sale provider
      *
-     * @WebMethod
+     * @WSDL\Annotation\WebMethod
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $productCode"
+     * )
      * @param string $productCode
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="int $Amount"
+     * )
      * @param int $Amount
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $CellNumber"
+     * )
      * @param string $CellNumber
-     * @param long $SEPId
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="long $SEPId"
+     * )
+     * @param int $SEPId
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $languageCode"
+     * )
      * @param string $languageCode
+     *
+     * @WSDL\Annotation\WebResult(
+     *     param="string $Result"
+     * )
      * @return string $Result
      */
     public function CallSaleProvider(
@@ -103,8 +148,16 @@ class SamanSoapServer implements SamanSoapApi
     /**
      * Confirm payment
      *
-     * @WebMethod
+     * @WSDL\Annotation\WebMethod
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $ProviderID"
+     * )
      * @param string $ProviderID
+     *
+     * @WSDL\Annotation\WebResult(
+     *     param="string $Result"
+     * )
      * @return string $Result
      */
     public function ExecSaleProvider($ProviderID)
@@ -119,8 +172,16 @@ class SamanSoapServer implements SamanSoapApi
     /**
      * Check status of transaction
      *
-     * @WebMethod
+     * @WSDL\Annotation\WebMethod
+     *
+     * @WSDL\Annotation\WebParam(
+     *      param="string $ProviderID"
+     * )
      * @param string $ProviderID
+     *
+     * @WSDL\Annotation\WebResult(
+     *     param="string $Result"
+     * )
      * @return string $Result
      */
     public function CheckStatus($ProviderID)

@@ -338,12 +338,11 @@ vendor/bin/phpspec run
 
 #### Api test
 
-Change default `endpoint` in
-`tests/api.suite.yml` and `tests/api/webservice.php`
-
-Then run:
+Run:
 
 ~~~
+docker-compose -d -f docker-compose.testing.yaml up
+
 vendor/bin/codecept run
 ~~~
 
